@@ -71,17 +71,15 @@ app.post('/auth/linkedin/post', upload.single('image'), async (req, res) => {
   const message = req.body.message;
   const image = req.file;
 
-  console.log({accessToken, message, image})
-
   try {
-    const profileResponse = await axios.get('https://api.linkedin.com/v2/userinfo', {
+    const profileResponse = await axios.get('https://api.linkedin.com/v2/me', {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }
     });
 
-    const profileId = profileResponse.data.sub;
-    console.log("this is profileid:", profileId)
+    const profileId = profileResponse.data.id;
+    console.log("this is profile id", profileId)
 
     let mediaAsset;
     if (image) {
